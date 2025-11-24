@@ -52,7 +52,7 @@ quais foram efetivamente confirmadas através de exames com resultado 'Reagente'
 Quais municípios ultrapassaram o limite de alerta epidemiológico 
 (definido aqui como mais de 50 notificações), indicando a necessidade de intervenção prioritária ou caracterização de surto?
 
-a
+
 
 
 
