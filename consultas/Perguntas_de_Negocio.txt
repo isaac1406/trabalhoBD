@@ -1,0 +1,58 @@
+1. Análise de Gravidade por Localidade (hospitalizacoes_municipios):
+
+Qual é o panorama geral da doença em cada município, 
+considerando o volume total de notificações registradas e, destas, quantas evoluíram para internação hospitalar?
+
+=================================================================================================================================
+
+2. Pressão Hospitalar Confirmada (municipios_volume_de_internacoes):
+
+Quais municípios estão enfrentando maior demanda de leitos hospitalares
+causada especificamente por casos de Dengue confirmados laboratorialmente (ignorando internações por suspeitas descartadas)?
+
+=================================================================================================================================
+
+3. Auditoria de Recursos Diagnósticos (auditoria_exames):
+
+Qual é o volume de utilização de cada tipo de exame cadastrado no sistema, 
+identificando quais métodos diagnósticos são mais solicitados e se existem exames cadastrados que não estão sendo utilizados?
+
+=================================================================================================================================
+
+4. Perfil Clínico dos Casos Graves (detalhamento_pacientes_hospitalizados):
+
+Quem são os pacientes que apresentaram agravamento do quadro clínico necessitando de hospitalização, 
+detalhando seu perfil demográfico, local de residência e a data de início dos sintomas?
+
+=================================================================================================================================
+
+5. Desfecho Clínico por Gênero (evolucao_por_sexo):
+
+Como se distribui a evolução dos casos (cura, óbito, etc.) entre os pacientes, 
+e existe alguma variação perceptível nesses desfechos quando segmentamos a análise pelo sexo biológico?
+
+=================================================================================================================================
+
+6. Monitoramento de Grupos Etários (pacientes_idosos):
+
+Quem são os pacientes que pertencem à faixa etária mais avançada 
+(nascidos antes da média de ano de nascimento da população notificada) e qual foi a classificação final dada aos seus casos?
+
+=================================================================================================================================
+
+7. Eficácia da Confirmação Laboratorial (notificacoes_reagentes):
+
+Do total de notificações registradas no sistema, 
+quais foram efetivamente confirmadas através de exames com resultado 'Reagente' ou 'Positivo'?
+
+=================================================================================================================================
+
+8. Identificação de Zonas de Surto (municipios_em_alerta):
+
+Quais municípios ultrapassaram o limite de alerta epidemiológico 
+(definido aqui como mais de 50 notificações), indicando a necessidade de intervenção prioritária ou caracterização de surto?
+
+
+
+
+
