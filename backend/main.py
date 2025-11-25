@@ -50,6 +50,7 @@ def evolucao_por_sexo(db: Connection = Depends(get_db_connection)):
         SELECT p.sexo, n.evolucao, COUNT(n.idNotificacao) AS Quantidade
         FROM paciente p
         JOIN notificacao n ON p.idPaciente = n.fkIdPaciente
+        JOIN municipio m ON n.fkIdMunicipio = m.idMunicipio
         GROUP BY p.sexo, n.evolucao;
     """
     with db.cursor() as cursor:
@@ -84,15 +85,16 @@ def municipios_alerta(db: Connection = Depends(get_db_connection)):
         cursor.execute(sql)
         return cursor.fetchall()
 
-@app.get("/municipios-volume-internacoes")
-def municipios_volume_internacoes(db: Connection = Depends(get_db_connection)):
+@app.get("/curva-epidemiologica")
+def curva_epidemiologica(db: Connection = Depends(get_db_connection)):
     sql = """
-        SELECT m.nomeMunicipio, m.siglaUF, COUNT(n.idNotificacao) AS Total_Casos,
-               SUM(CASE WHEN n.hospitalizacao = '1' THEN 1 ELSE 0 END) AS Total_Hospitalizacoes
-        FROM municipio m
-        JOIN notificacao n ON m.idMunicipio = n.fkIdMunicipio
-        GROUP BY m.nomeMunicipio, m.siglaUF
-        ORDER BY Total_Casos DESC;
+        SELECT 
+            DATE_FORMAT(n.dataSintoma, '%Y-%m') AS Periodo,
+            COUNT(n.idNotificacao) AS Total_Casos
+        FROM notificacao n
+        WHERE n.dataSintoma IS NOT NULL
+        GROUP BY Periodo
+        ORDER BY Periodo ASC;
     """
     with db.cursor() as cursor:
         cursor.execute(sql)
@@ -117,6 +119,7 @@ def pacientes_idosos(db: Connection = Depends(get_db_connection)):
         SELECT p.idPaciente, p.anoNasc, n.classificacaoFinal
         FROM paciente p
         JOIN notificacao n ON p.idPaciente = n.fkIdPaciente
+        JOIN municipio m ON n.fkIdMunicipio = m.idMunicipio
         WHERE p.anoNasc < (SELECT AVG(anoNasc) FROM paciente);
     """
     with db.cursor() as cursor:
