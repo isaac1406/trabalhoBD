@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { 
   Box, Heading, SimpleGrid, Text, Card, CardHeader, CardBody, 
   Stat, StatLabel, StatNumber, StatHelpText, 
-  Badge, Flex, Icon, Table, Thead, Tbody, Tr, Th, Td, Spinner, Center
+  Badge, Flex, Icon, Table, Thead, Tbody, Tr, Th, Td, Spinner, Center,
+  Button // Adicionado
 } from '@chakra-ui/react';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
@@ -24,6 +25,9 @@ export const Dashboard = () => {
   const [q7Reagentes, setQ7Reagentes] = useState<any[]>([]);
   const [q8Idosos, setQ8Idosos] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Estado para controlar a expansão do card de alerta
+  const [expandirAlerta, setExpandirAlerta] = useState(false);
 
   useEffect(() => {
     // Buscando dados reais da API Python
@@ -202,7 +206,7 @@ export const Dashboard = () => {
           </CardBody>
         </Card>
 
-        {/* --- 5. Municípios em Alerta --- */}
+        {/* --- 5. Municípios em Alerta (MODIFICADO COM BOTÃO) --- */}
         <Card borderTop="4px solid" borderColor="yellow.400" bg="yellow.50" minW="0">
           <CardHeader pb={0}>
              <Flex align="center" gap={2}>
@@ -213,14 +217,29 @@ export const Dashboard = () => {
           </CardHeader>
           <CardBody>
             <SimpleGrid columns={2} spacing={2} mt={2}>
-              {q5Alerta && q5Alerta.map((m: any, i: number) => (
+              {/* Lógica: Mostra todos se expandido, ou apenas 6 se recolhido */}
+              {q5Alerta && (expandirAlerta ? q5Alerta : q5Alerta.slice(0, 6)).map((m: any, i: number) => (
                 <Flex key={i} bg="white" p={2} borderRadius="md" align="center" border="1px solid" borderColor="yellow.200">
-                  <Text fontWeight="bold" fontSize="sm">{m.nomeMunicipio}</Text>
+                  <Text fontWeight="bold" fontSize="sm" noOfLines={1}>{m.nomeMunicipio}</Text>
                   <Badge ml="auto" colorScheme="red">{m.siglaUF}</Badge>
                 </Flex>
               ))}
               {(!q5Alerta || q5Alerta.length === 0) && <Text fontSize="sm">Nenhum município em alerta.</Text>}
             </SimpleGrid>
+
+            {/* Botão para alternar visualização, só aparece se houver mais de 6 itens */}
+            {q5Alerta && q5Alerta.length > 6 && (
+                <Button 
+                    size="xs" 
+                    variant="solid" 
+                    colorScheme="yellow" 
+                    w="full" 
+                    mt={3} 
+                    onClick={() => setExpandirAlerta(!expandirAlerta)}
+                >
+                    {expandirAlerta ? "Recolher Lista" : `Ver todos (${q5Alerta.length})`}
+                </Button>
+            )}
           </CardBody>
         </Card>
 

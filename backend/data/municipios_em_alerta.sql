@@ -1,12 +1,5 @@
-SELECT 
-    m.nomeMunicipio,
-    m.siglaUF
-FROM 
-    Municipio m
-WHERE 
-    m.idMunicipio IN (
-        SELECT fkIdMunicipio 
-        FROM Notificacao 
-        GROUP BY fkIdMunicipio 
-        HAVING COUNT(idNotificacao) > 50
-    );
+SELECT m.nomeMunicipio, COUNT(idNotificacao) AS num_casos
+FROM municipio m
+JOIN notificacao n
+	on m.idMunicipio = n.fkIdMunicipio
+GROUP BY m.nomeMunicipio HAVING COUNT(idNotificacao) > 50

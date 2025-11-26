@@ -8,5 +8,7 @@ JOIN
     Notificacao n ON p.idPaciente = n.fkIdPaciente
 JOIN 
     municipio m ON n.fkIdMunicipio = m.idMunicipio
+WHERE n.evolucao = '1'
+OR n.evolucao = '2'
 GROUP BY 
     p.sexo, n.evolucao;

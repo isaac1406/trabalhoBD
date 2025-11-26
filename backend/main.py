@@ -47,11 +47,20 @@ def pacientes_hospitalizados(db: Connection = Depends(get_db_connection)):
 @app.get("/evolucao-por-sexo")
 def evolucao_por_sexo(db: Connection = Depends(get_db_connection)):
     sql = """
-        SELECT p.sexo, n.evolucao, COUNT(n.idNotificacao) AS Quantidade
-        FROM paciente p
-        JOIN notificacao n ON p.idPaciente = n.fkIdPaciente
-        JOIN municipio m ON n.fkIdMunicipio = m.idMunicipio
-        GROUP BY p.sexo, n.evolucao;
+SELECT 
+    p.sexo,
+    n.evolucao, -- Exibe o código da evolução (ex: 1-Cura, 2-Óbito)
+    COUNT(n.idNotificacao) AS Quantidade
+FROM 
+    Paciente p
+JOIN 
+    Notificacao n ON p.idPaciente = n.fkIdPaciente
+JOIN 
+    municipio m ON n.fkIdMunicipio = m.idMunicipio
+WHERE n.evolucao = '1'
+OR n.evolucao = '2'
+GROUP BY 
+    p.sexo, n.evolucao;
     """
     with db.cursor() as cursor:
         cursor.execute(sql)
@@ -74,12 +83,11 @@ def hospitalizacoes_municipio(db: Connection = Depends(get_db_connection)):
 @app.get("/municipios-alerta")
 def municipios_alerta(db: Connection = Depends(get_db_connection)):
     sql = """
-        SELECT m.nomeMunicipio, m.siglaUF
+        SELECT m.nomeMunicipio, COUNT(idNotificacao) AS num_casos
         FROM municipio m
-        WHERE m.idMunicipio IN (
-            SELECT fkIdMunicipio FROM notificacao 
-            GROUP BY fkIdMunicipio HAVING COUNT(idNotificacao) > 50
-        );
+        JOIN notificacao n
+            on m.idMunicipio = n.fkIdMunicipio
+        GROUP BY m.nomeMunicipio HAVING COUNT(idNotificacao) > 50
     """
     with db.cursor() as cursor:
         cursor.execute(sql)
