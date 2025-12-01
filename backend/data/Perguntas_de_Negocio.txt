@@ -59,3 +59,21 @@ Objetivo: Filtragem de casos reais para boletins oficiais que exigem comprovaç�
 Pergunta de Negócio: Quem são os pacientes que pertencem à faixa etária mais avançada (nascidos antes da média de ano de nascimento da população notificada) e onde eles residem, visto que este grupo possui maior risco de comorbidades?
 
 Objetivo: Proteção social e busca ativa de grupos de risco demográfico.
+
+=================================================================================================================================
+
+9. Ultimas Notificacoes Registradas (ultimas_notificacoes)
+
+Pergunta de Negócio: Quais foram os casos notificados na data mais recente (última atualização) registrada no banco de dados?
+
+Objetivo: Identificar as ocorrências mais recentes inseridas no sistema de vigilância, permitindo aos gestores o monitoramento diário dos novos 
+casos suspeitos (monitoramento D-0) sem a interferência de dados históricos antigos.
+
+=================================================================================================================================
+
+10. Residentes em Municipios em Alerta (residentes_munic_em_alerta)
+
+Pergunta de Negócio: Quem são os pacientes que residem em municípios que já registraram um alto volume de notificações, indicando que moram em área de risco?
+
+Objetivo: Mapear e listar os pacientes que residem em municípios classificados como áreas de 'alto risco' (definidas pelo alto volume de notificações acumuladas), 
+facilitando o direcionamento de campanhas preventivas focadas nessas populações vulneráveis.
